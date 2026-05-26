@@ -294,7 +294,9 @@ document.querySelector('.voteNumber');
 
 let current = 0;
 
-const duration = 3200;
+/* ゆっくりカウントアップ */
+
+const duration = 5200;
 
 const startTime = performance.now();
 
@@ -306,7 +308,7 @@ function animateCounter(now){
   const progress =
     Math.min(elapsed / duration,1);
 
-  /* 最後気持ちよく伸びる */
+  /* 最後ふわっと伸びる */
 
   const ease =
     1 - Math.pow(1-progress,3);
