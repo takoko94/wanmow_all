@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280,height=720">
+
+<title>わんも～推し犬総選挙 総投票数</title>
+
+<style>
+
+@font-face{
+  font-family:'Panda';
+  src:url('pandabakery.ttf');
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+
+  width:1280px;
+  height:720px;
+
+  overflow:hidden;
+
+  position:relative;
+
+  font-family:'Panda',sans-serif;
+}
+
+/* 背景 */
+
+.bg{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  z-index:-3;
+}
+
+/* オーバーレイ */
+
+.overlay{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,248,252,0.22),
+      rgba(255,240,247,0.34)
+    );
+
+  z-index:-2;
+}
+
+/* キラキラ */
+
+.sparkle{
+
+  position:absolute;
+
+  border-radius:999px;
+
+  background:white;
+
+  opacity:0.65;
+
+  animation:kirakira 3s infinite;
+}
+
+.sparkle1{
+  width:18px;
+  height:18px;
+  top:120px;
+  left:180px;
+}
+
+.sparkle2{
+  width:12px;
+  height:12px;
+  top:210px;
+  right:240px;
+  animation-delay:1s;
+}
+
+.sparkle3{
+  width:20px;
+  height:20px;
+  bottom:180px;
+  left:260px;
+  animation-delay:2s;
+}
+
+.sparkle4{
+  width:14px;
+  height:14px;
+  bottom:120px;
+  right:180px;
+  animation-delay:1.4s;
+}
+
+@keyframes kirakira{
+
+  0%{
+    transform:scale(0.5);
+    opacity:0.2;
+  }
+
+  50%{
+    transform:scale(1.4);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(0.5);
+    opacity:0.2;
+  }
+}
+
+/* メイン */
+
+.container{
+
+  width:100%;
+  height:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+}
+
+/* ロゴ */
+
+.logo{
+
+  width:340px;
+
+  margin-bottom:26px;
+
+  filter:
+    drop-shadow(0 6px 18px rgba(255,255,255,0.9));
+}
+
+/* タイトル */
+
+.subTitle{
+
+  font-size:34px;
+
+  color:#9a7b68;
+
+  letter-spacing:3px;
+
+  margin-bottom:18px;
+
+  text-shadow:
+    0 2px 8px rgba(255,255,255,0.9);
+}
+
+.mainTitle{
+
+  font-size:78px;
+
+  color:#ff8fb0;
+
+  line-height:1.15;
+
+  text-shadow:
+    0 5px 0 #fff,
+    0 10px 25px rgba(255,143,176,0.32);
+}
+
+/* 数字 */
+
+.voteNumber{
+
+  margin-top:36px;
+
+  font-size:170px;
+
+  line-height:1;
+
+  color:#ff8fb0;
+
+  letter-spacing:6px;
+
+  text-shadow:
+    0 6px 0 #fff,
+    0 14px 30px rgba(255,143,176,0.35);
+
+  animation:
+    pop 1.5s ease-in-out infinite;
+}
+
+.voteText{
+
+  margin-top:10px;
+
+  font-size:58px;
+
+  color:#9a7b68;
+
+  text-shadow:
+    0 2px 8px rgba(255,255,255,0.9);
+}
+
+@keyframes pop{
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.03);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 背景 -->
+
+<img src="haikei.png" class="bg">
+
+<div class="overlay"></div>
+
+<!-- キラキラ -->
+
+<div class="sparkle sparkle1"></div>
+<div class="sparkle sparkle2"></div>
+<div class="sparkle sparkle3"></div>
+<div class="sparkle sparkle4"></div>
+
+<!-- メイン -->
+
+<div class="container">
+
+  <!-- ロゴ -->
+
+  <img src="wan_logo.png" class="logo">
+
+  <!-- タイトル -->
+
+  <div class="subTitle">
+    わんも～推し犬総選挙
+  </div>
+
+  <div class="mainTitle">
+    総投票数
+  </div>
+
+  <!-- 数字 -->
+
+  <div class="voteNumber">
+    0
+  </div>
+
+  <div class="voteText">
+    票
+  </div>
+
+</div>
+
+<script>
+
+const target = 13386;
+
+const counter =
+document.querySelector('.voteNumber');
+
+let current = 0;
+
+const duration = 3200;
+
+const startTime = performance.now();
+
+function animateCounter(now){
+
+  const elapsed =
+    now - startTime;
+
+  const progress =
+    Math.min(elapsed / duration,1);
+
+  /* 最後気持ちよく伸びる */
+
+  const ease =
+    1 - Math.pow(1-progress,3);
+
+  current =
+    Math.floor(target * ease);
+
+  counter.innerHTML =
+    current.toLocaleString();
+
+  if(progress < 1){
+
+    requestAnimationFrame(
+      animateCounter
+    );
+  }
+}
+
+requestAnimationFrame(
+  animateCounter
+);
+
+</script>
+
+</body>
+</html>
